@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1</title>
+    <style>
+        #notice {
+            width: 500px;
+            padding: 10px 0;
+            text-align: left;
+            background-color: rgb(226, 226, 226);
+            margin-top: 20px;
+            border-style: ridge;
+        }
+        
+        #notice p {
+            margin-left: 20px;
+        }
+        
+        button {
+            border-style: outset;
+            height: 35px;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="nextButton()">Next Step >></button>
+    <!-- display infor block -->
+    <div id=notice style="display: none;">
+        <p id="name"></p>
+        <p id="age"></p>
+        <p id="gender"></p>
+        <p id="city"></p>
+        <p id="mobile"></p>
+        <p id="email"></p>
+        <p id="job"></p>
+    </div>
+
+    <script>
+        let today = new Date();
+
+        alert('Welcome to the first JavaScript application.');
+        getInfor();
+
+        //This function will get and check infor from user
+        function getInfor() {
+            let name, age, gender, birthYear, city, mobile, email, job;
+            let inputCheck = false;
+
+            //get name
+            do {
+                inputCheck = false;
+                name = prompt('Please fill in your name.');
+                //condition of name: can not be blank and can not be numeric
+                if (name.trim().length == 0 || !isNaN(name)) {
+                    inputCheck = true;
+                    alert('It looks like this name is invalid.\nPlease try again!');
+                }
+            } while (inputCheck);
+
+            //get birth year
+            do {
+                inputCheck = false;
+                birthYear = prompt('Please fill in your birth year.');
+                /*condition of birthYear: must be numeric, 4 digit.
+                and birthYear less than curent year.
+                */
+                if (isNaN(birthYear) || birthYear.trim().length != 4) {
+                    inputCheck = true;
+                    alert('Birth year must be numeric and 4 digit.\nPlease try again!')
+                } else if (birthYear > today.getFullYear() || birthYear < 0) {
+                    inputCheck = true;
+                    alert('The given year is invalid.\nMust be less than current year (' + today.getFullYear() + ').');
+                }
+            } while (inputCheck);
+
+            //get gender
+            do {
+                inputCheck = false;
+                let temp = prompt('Enter 0 if you are male.\nEnter 1 if you are female.');
+                /*if user enter 0, set value for gender variable is male
+                if user enter 1, set value for gender variable is female
+                if invalid, ask user to re-enter
+                */
+                if (temp === '0') {
+                    gender = 'Male';
+                } else if (temp === '1') {
+                    gender = 'Female';
+                } else {
+                    inputCheck = true;
+                    alert('It looks like invalid.\nPlease enter 0 or 1.');
+                }
+            } while (inputCheck);
+
+            //get city
+            do {
+                inputCheck = false;
+                city = prompt('Please fill in the city you live in.');
+                //condition of birthYear: can not be blank and can not be numeric
+                if (city.trim().length == 0 || !isNaN(city)) {
+                    inputCheck = true;
+                    alert('It looks like invalid.\nPlease try again!');
+                }
+            } while (inputCheck);
+
+            //get phone number
+            do {
+                inputCheck = false;
+                mobile = prompt('Please fill in your phone number.');
+                //condition of phone number: must be numeric and 10 digit
+                if (isNaN(mobile) || mobile.trim().length != 10) {
+                    inputCheck = true;
+                    alert('Invalid. The phone number must be numeric and 10 digit.\nPlease try again!');
+                }
+            } while (inputCheck);
+
+            //get email address
+            do {
+                inputCheck = false;
+                email = prompt('Please fill in your email.');
+                //condition of email: can not be blank and can not be numeric
+                if (email.trim().length == 0 || !isNaN(email)) {
+                    inputCheck = true;
+                    alert('It looks like this email is invalid.\nPlease try again!');
+                }
+            } while (inputCheck);
+
+            //get occupation
+            do {
+                inputCheck = false;
+                job = prompt('Please fill in your current occupation.');
+                //condition of occupation: can not be blank and can not be numeric
+                if (job.trim().length == 0 || !isNaN(job)) {
+                    inputCheck = true;
+                    alert('It looks like invalid.\nPlease try again!');
+                }
+            } while (inputCheck);
+
+            age = ageCalculator(birthYear);
+            addContentToHTML(name, age, gender, city, mobile, email, job);
+        }
+
+        //this function will insert html content to <p> elements
+        function addContentToHTML(name, age, gender, city, mobile, email, job) {
+            document.getElementById('name').innerHTML = '<span style="font-weight: bold">NAME: </span>' + name;
+            document.getElementById('age').innerHTML = '<span style="font-weight: bold">AGE: </span>' + age;
+            document.getElementById('gender').innerHTML = '<span style="font-weight: bold">GENDER: </span>' + gender;
+            document.getElementById('city').innerHTML = '<span style="font-weight: bold">CITY: </span>' + city;
+            document.getElementById('mobile').innerHTML = '<span style="font-weight: bold">MOBILE: </span>' + mobile;
+            document.getElementById('email').innerHTML = '<span style="font-weight: bold">EMAIL: </span>' + email;
+            document.getElementById('job').innerHTML = '<span style="font-weight: bold">OCCUPATION: </span>' + job;
+        }
+
+        //age calculator function
+        function ageCalculator(birthYear) {
+            return today.getFullYear() - birthYear + 1;
+        }
+
+        //show and hide information function
+        function nextButton() {
+            let box = document.getElementById('notice');
+            if (box.style.display == 'none') {
+                box.style.display = 'block';
+            } else {
+                box.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>
